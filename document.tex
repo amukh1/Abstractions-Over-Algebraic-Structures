@@ -1,0 +1,179 @@
+\documentclass{report}
+\makeatletter\@addtoreset{chapter}{part}\makeatother%
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\newcounter{theo}[section]\setcounter{theo}{0}
+\renewcommand{\thetheo}{\arabic{section}.\arabic{theo}}
+\newenvironment{theo}[2][]{%
+\refstepcounter{theo}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut Theorem~\thetheo};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut Theorem~\thetheo:~#1};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=blue!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax%
+\label{#2}}{\end{mdframed}}
+
+
+\newcounter{deff}[section]\setcounter{deff}{0}
+\renewcommand{\thedeff}{\arabic{section}.\arabic{deff}}
+\newenvironment{deff}[2][]{%
+\refstepcounter{deff}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut Definition~\thedeff};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=blue!20]
+{\strut Definition~\thedeff:~#1};}}%
+}%
+\mdfsetup{innertopmargin=10pt,linecolor=blue!20,%
+linewidth=2pt,topline=true,%
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax%
+\label{#2}}{\end{mdframed}}
+
+
+\title{Abstractions Over Algebraic Structures}
+\author{Aditya Mukherjee}
+\date{July 2023}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+    What is Algebra?\\
+    \vspace*{2cm}
+    I guess that's what we're here to figure out..
+\end{center}
+
+\tableofcontents
+
+\begin{abstract}
+    \begin{center}
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu mi bibendum neque egestas congue quisque egestas.
+        \vspace*{2cm}
+        
+        Haha just kidding, this is a book about algebraic structures, not Latin.
+    \end{center}
+\end{abstract}
+\part{Preliminaries}
+\chapter{Set Theory}
+The chapter starts off with what is a set, then I introduce you to common sets you will find along your journey, and then I show you some set operations.
+\section{Sets and Operations over Sets}
+A \textbf{set} is a collection of objects called elements. The elements in a set have no order and no repetition. We describe the contents of a set using $\{$ and $\}$.
+An example of a set containing elements $1$ and $2$ called $A$ is: $$A = \{1, 2\} = \{2, 1\} = \{x \in \mathbb{N} : x = 1,2 \}.$$ If we want to show an element, $x$, is a set, $A$, we say: $x \in A$.
+Many sets can also have an infinite number of elements, for example, $\mathbb{R}, \mathbb{N}, \text{ and } \mathbb{Z}$ all have an infinite number of elements.
+We can indicate this with ellipsis: $$\mathbb{N} = \{1, 2, \dots \},\text{ } \mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots \}.$$
+Another way of writing these is using \textbf{set builder notation},
+$$\mathbb{Q} = \left\{\frac{q}{p} : q,p \in \mathbb{Z}, p \neq 0 \right\},$$
+you write the structure of the set before the colon and statements about it after the colon.
+$$\{x \in A : P(x)\}$$
+% \hspace{20 mm}
+
+Sets can contain all sorts of elements besides numbers, think functions, other sets, \textbf{\textit{"Algebraic Structures"}}, functions, etc.
+For example, the set of real functions whose value at $x=2$ is $6$ (the arrow will be explained later) $$\{(f : \mathbb{R} \mapsto \mathbb{R}): f(2) = 6 \}$$
+and the set of differentiable real functions whose derivative is $6x^2$:
+$$\left\{(f : \mathbb{R} \mapsto \mathbb{R}): f\text{ is differentiable}, \frac{df}{dx} = 6x^2 \right\}$$
+both functions $2x^3$ and $2x^3 + 8$ are in that set.
+Here is another set: $$K = \{A=\{a\}, B=\{b\}\}$$ $a$ in that set is described as $a \in A \in K$.
+You could have a set called "animals", featuring dogs and cats: $$\text{Animals} = \{\text{Cats}, \text{Dogs}\}$$ (all the other animals are inferior).
+
+And with that, and our new understanding of sets, comes out first definition: \begin{deff}[Set]{def:set}
+    A \textbf{set} is a collection of objects called elements. The elements in a set have no order and no repetition.
+\end{deff}
+
+There are many operations one can apply on sets, the most common ones are: union, intersection, and complement.
+The \textbf{Union} of two sets is a set containing all of the elements of both sets, for example: $$A = \{1, 2, 3\}, B = \{3, 4, 5\}$$ $$A \cup B = \{1, 2, 3, 4, 5\}.$$
+The formal definition of a union is $$A \cup B = \{x : x \in A \text{ or } x \in B\}.$$
+The \textbf{Intersection} of two sets is a set containing all of the elements that are in both sets, for example: $$A = \{1, 2, 3\}, B = \{3, 4, 5\}$$ $$A \cap B = \{3\}.$$
+The formal definition of an intersection is $$A \cap B = \{x : x \in A \text{ and } x \in B\}.$$
+Before I can define the complement of a set, I need to define a couple more things.
+If every element in a set, $A$, is in another set, $B$, then $A$ is a \textbf{subset} of $B$, we write this as $A \subseteq B$ or $A \subset B$. If every element in $A$ is in $B$, and every element in $B$ is in $A$, then $A$ and $B$ are \textbf{equal}, we write this as $A = B$.
+The \textbf{Difference} of two sets, $A$ and $B$, in that order ($A \setminus B$), is the set containing all the elements of $A$ that are not in $B$. For example: $$A = \{1, 2, 3\}, B = \{3, 4, 5\}$$ $$A \setminus B = \{1, 2\}.$$
+The formal definition of a set difference is $$A \setminus B = \{x : x \in A \text{ and } x \notin B\}.$$
+If $A \subseteq U$, then $U$ can be described as the \textbf{universal set} of $A$. The \textbf{Complement} of $A$ is $A^c = U \setminus A$.
+
+Next, probably one of the most important operations on a set you will encounter in set theory is the \textbf{Cardinality} of a set.
+The cardinality of a set is the number of elements it contains.
+For example, the cardinality of $\{1,2\}$ is $2$.
+We write the cardinality of a set $A$ as $|A|$.
+$$|\{1, 2, \dots, n\}| = n.$$
+The next operations I will introduce are the Cartesian Product and the power set.
+The \textbf{Cartesian Product} of two sets is essentially each all the possible coordinates you can make with the elements of the set.
+The Cartesian Product of two sets, $A$ and $B$, is written as $A \times B$.
+For example, $$\{1, 2\} \times \{2, 3\} = {(1,2), (1,3), (2,2), (2,3)}.$$
+And now I think it is due time for our first theorem:
+\begin{theo}[Cardinality of Cartesian Product]{thm:cartesian}
+    The cardinality of the Cartesian Product of two sets is the product of the cardinalities of the two sets.
+    $$|A \times B| = |A| \cdot |B|.$$
+\end{theo}
+\textbf{\textit{Proof:}} This result is relatively easy to show, for each possible element, there are $|A|$ possible values for the first coordinate, and $|B|$ possible values for the second coordinate, so there are $|A| \cdot |B|$ possible coordinates, and thus $|A| \cdot |B|$ elements in the Cartesian Product. $\square$
+This is more clear in this diagram:
+\begin{center}
+    \begin{tabular}{ c | c c }
+    $\delta$ & 2 & 3 \\
+    \hline
+     1 & \{1,2\} & \{1,3\} \\ 
+     2 & \{2,2\} & \{2,3\} 
+    \end{tabular}
+    \end{center}
+The last thing I will show in this section is \textbf{Power Sets}.
+The power set of a set is the set of all subsets of that set.
+This includes the empty set and the set itself.
+Each and every element of the set is also a subset of it too.
+We denote the power set with $\mathcal{P}(A)$, where $A$ is the set we are operating on.
+An example of a power set is: $$\mathcal{P}(\{1, 2, 3\}) = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1,2\}, \{1,3\}, \{2,3\}, \{1,2,3\}\}.$$
+The formal definition of the power set is:
+$$\mathcal{P}(A) = \{x : x \subseteq A\}.$$
+I think it is important to notice the cardinality of the power set. The original set had $3$ elements, and the power set has $8$ elements, which just so happens to be $2^3$.
+This is not a coincidence, and in fact, it is true for all sets. I think this calls for another theorem! \newpage
+\begin{theo}[Cardinality of Power Set]{thm:power}
+    The cardinality of the power set of a set is $2^{|A|}$.
+    $$|\mathcal{P}(A)| = 2^{|A|}.$$
+\end{theo}
+
+\textbf{\textit{Proof:}} This is a relatively easy proof, we can prove it by induction, or take a more simple approach. One way to describe the cardinality of the power set, is to understand
+that the power set contains each \textbf{grouping} of elements in $A$. In other words, out of all the elements in $A$, the power set contains all the groups of 0 elements, $+$ all the groups of 1 elements, $\dots$
+$$|\mathcal{P}(A)| = {|A| \choose 0} + {|A| \choose 1} + \dots + {|A| \choose |A|}.$$
+This can easily be re-arranged into $$\sum_{k=0}^{|A|}{|A| \choose k}$$
+Now all we have to do is show this sum equals $2^{|A|}$, which is easy to do with the Binomial Theorem.
+$$2^{|A|} = (1 + 1)^{|A|} = \sum_{k = 0}^{|A|}{|A| \choose k} 1^k 1^{n-k} = \sum_{k = 0}^{|A|}{|A| \choose k}. \square$$
+And with that, I think this is a great conclusion to the section.
+
+\end{document}
+
+
+\begin{theo}[Pythagoras' theorem]{thm:pythagoras}
+    In a right triangle, the square of the hypotenuse is equal to the sum of the squares of the catheti.
+    \[a^2+b^2=c^2\]
+    \end{theo}
+
+\begin{deff}[Pythagoras' theorem]{deff:pythagoras}
+        In a right triangle, the square of the hypotenuse is equal to the sum of the squares of the catheti.
+        \[a^2+b^2=c^2\]
+\end{deff}
