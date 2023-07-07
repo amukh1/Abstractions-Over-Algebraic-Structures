@@ -7,6 +7,7 @@
 \usepackage{amssymb}
 \usepackage[framemethod=TikZ]{mdframed}
 
+
 \newcounter{theo}[section]\setcounter{theo}{0}
 \renewcommand{\thetheo}{\arabic{section}.\arabic{theo}}
 \newenvironment{theo}[2][]{%
@@ -58,7 +59,7 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 
 
 \title{Abstractions Over Algebraic Structures}
-\author{Aditya Mukherjee}
+\author{Aditya M}
 \date{July 2023}
 
 \begin{document}
@@ -113,8 +114,10 @@ The formal definition of a union is $$A \cup B = \{x : x \in A \text{ or } x \in
 The \textbf{Intersection} of two sets is a set containing all of the elements that are in both sets, for example: $$A = \{1, 2, 3\}, B = \{3, 4, 5\}$$ $$A \cap B = \{3\}.$$
 The formal definition of an intersection is $$A \cap B = \{x : x \in A \text{ and } x \in B\}.$$
 Before I can define the complement of a set, I need to define a couple more things.
-If every element in a set, $A$, is in another set, $B$, then $A$ is a \textbf{subset} of $B$, we write this as $A \subseteq B$ or $A \subset B$. If every element in $A$ is in $B$, and every element in $B$ is in $A$, then $A$ and $B$ are \textbf{equal}, we write this as $A = B$.
-The \textbf{Difference} of two sets, $A$ and $B$, in that order ($A \setminus B$), is the set containing all the elements of $A$ that are not in $B$. For example: $$A = \{1, 2, 3\}, B = \{3, 4, 5\}$$ $$A \setminus B = \{1, 2\}.$$
+If every element in a set, $A$, is in another set, $B$, then $A$ is a \textbf{subset} of $B$, we write this as $A \subseteq B$ or $A \subset B$.
+If every element in $A$ is in $B$, and every element in $B$ is in $A$, then $A$ and $B$ are \textbf{equal}, we write this as $A = B$.
+The \textbf{Difference} of two sets, $A$ and $B$, in that order ($A \setminus B$), is the set containing all the elements of $A$ that are not in $B$.
+For example: $$A = \{1, 2, 3\}, B = \{3, 4, 5\}$$ $$A \setminus B = \{1, 2\}.$$
 The formal definition of a set difference is $$A \setminus B = \{x : x \in A \text{ and } x \notin B\}.$$
 If $A \subseteq U$, then $U$ can be described as the \textbf{universal set} of $A$. The \textbf{Complement} of $A$ is $A^c = U \setminus A$.
 
@@ -132,7 +135,10 @@ And now I think it is due time for our first theorem:
     The cardinality of the Cartesian Product of two sets is the product of the cardinalities of the two sets.
     $$|A \times B| = |A| \cdot |B|.$$
 \end{theo}
-\textbf{\textit{Proof:}} This result is relatively easy to show, for each possible element, there are $|A|$ possible values for the first coordinate, and $|B|$ possible values for the second coordinate, so there are $|A| \cdot |B|$ possible coordinates, and thus $|A| \cdot |B|$ elements in the Cartesian Product. $\square$
+\textbf{\textit{Proof:}} This result is relatively easy to show, for each possible element, there are $|A|$ possible values for the first coordinate, and $|B|$ possible values for the second coordinate, so there are $|A| \cdot |B|$ possible coordinates, and thus $|A| \cdot |B|$ elements in the Cartesian Product.
+
+$\hfill \square$
+
 This is more clear in this diagram:
 \begin{center}
     \begin{tabular}{ c | c c }
@@ -142,6 +148,47 @@ This is more clear in this diagram:
      2 & \{2,2\} & \{2,3\} 
     \end{tabular}
     \end{center}
+
+
+Now that we understand Cardinality, I can introduce these theorems:
+\begin{theo}[Cardinality of Union]{thm:union}
+    The cardinality of the union of two sets is the sum of the cardinalities of the two sets minus the cardinality of their intersection.
+    $$|A \cup B| = |A| + |B| - |A \cap B|.$$
+\end{theo}
+\textbf{\textit{Proof:}} This is a bit more complicated to show, but it is still relatively easy.
+We can split the union into two parts, the intersection and the union of the two sets without the intersection.
+The intersection is counted twice, so we subtract it once.
+
+$\hfill \square$
+
+The second theorem is a corollary of the first:
+\newpage
+\begin{theo}[Cardinality of Intersection]{thm:intersection}
+    The cardinality of the intersection of two sets is the sum of the cardinalities of the two sets minus the cardinality of their union.
+    $$|A \cap B| = |A| + |B| - |A \cup B|.$$
+\end{theo}
+\textbf{\textit{Proof:}} This is a corollary of the previous theorem, we can just switch the union and intersection.
+We know $|A| + |B|$ is the union $+$ the intersection, so we subtract the union to get the intersection
+
+$\hfill \square$
+
+Another important theorem that involves unions and intersections is De Morgan's Laws:
+\begin{theo}[De Morgan's Laws]{thm:demorgansset}
+    $$(A \cup B)^c = A^c \cap B^c$$
+    $$(A \cap B)^c = A^c \cup B^c$$
+\end{theo}
+\textbf{\textit{Proof:}} This is much harder than the others. I will only prove the first one, the second one will be left as an exercise to the reader.
+First I will assume $A,B \subseteq U$.
+So to prove the result we must show $$(A \cup B)^c \subseteq A^c \cap B^c$$ and $$(A^c \cap B^c) \subseteq (A \cup B)^c.$$
+First, let there exist some $x \in (A \cup B)^c,$ that means $x \notin (A \cup B)$.
+Had $x$ been in $A$ or $B$, it would have been in $A \cup B$, therefore $x \notin A$ and $x \notin B$. That is the same as saying $x \in A^c$ and $x \in B^c$.
+This means $x \in (A^c \cap B^c)$. And that implies $$(A \cup B)^c \subseteq A^c \cap B^c.$$
+Now to prove it in the other direction. Suppose some $x \in (A^c \cap B^c)$, this is the same as saying $x \in A^c$ and $x \in B^c$. 
+That means $x \notin A$ and $x \notin B$. This implies $x \notin (A \cup B)$, or $x \in (A \cup B)^c$.
+This means that $(A^c \cap B^c) \subseteq (A \cup B)^c$, and thus $$(A \cup B)^c = A^c \cap B^c.$$
+
+$\hfill\square$
+
 The last thing I will show in this section is \textbf{Power Sets}.
 The power set of a set is the set of all subsets of that set.
 This includes the empty set and the set itself.
@@ -162,7 +209,10 @@ that the power set contains each \textbf{grouping} of elements in $A$. In other 
 $$|\mathcal{P}(A)| = {|A| \choose 0} + {|A| \choose 1} + \dots + {|A| \choose |A|}.$$
 This can easily be re-arranged into $$\sum_{k=0}^{|A|}{|A| \choose k}$$
 Now all we have to do is show this sum equals $2^{|A|}$, which is easy to do with the Binomial Theorem.
-$$2^{|A|} = (1 + 1)^{|A|} = \sum_{k = 0}^{|A|}{|A| \choose k} 1^k 1^{n-k} = \sum_{k = 0}^{|A|}{|A| \choose k}. \square$$
+$$2^{|A|} = (1 + 1)^{|A|} = \sum_{k = 0}^{|A|}{|A| \choose k} 1^k 1^{n-k} = \sum_{k = 0}^{|A|}{|A| \choose k}.$$
+
+$\hfill \square$
+
 And with that, I think this is a great conclusion to the section.
 
 \end{document}
@@ -177,3 +227,4 @@ And with that, I think this is a great conclusion to the section.
         In a right triangle, the square of the hypotenuse is equal to the sum of the squares of the catheti.
         \[a^2+b^2=c^2\]
 \end{deff}
+  
