@@ -198,7 +198,7 @@ An example of a power set is: $$\mathcal{P}(\{1, 2, 3\}) = \{\emptyset, \{1\}, \
 The formal definition of the power set is:
 $$\mathcal{P}(A) = \{x : x \subseteq A\}.$$
 I think it is important to notice the cardinality of the power set. The original set had $3$ elements, and the power set has $8$ elements, which just so happens to be $2^3$.
-This is not a coincidence, and in fact, it is true for all sets. I think this calls for another theorem! \newpage
+This is not a coincidence, and in fact, it is true for all sets. I think this calls for another theorem!
 \begin{theo}[Cardinality of Power Set]{thm:power}
     The cardinality of the power set of a set is $2^{|A|}$.
     $$|\mathcal{P}(A)| = 2^{|A|}.$$
@@ -214,6 +214,13 @@ $$2^{|A|} = (1 + 1)^{|A|} = \sum_{k = 0}^{|A|}{|A| \choose k} 1^k 1^{n-k} = \sum
 $\hfill \square$
 
 And with that, I think this is a great conclusion to the section.
+
+% exercies
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
+1. Show that $A \subseteq B$ if and only if $A \cap B = A$. \\
+2. Show that the set $\{k \in \mathbb{Z} : k = 12a, a \in \mathbb{Z}\}$ is a subset of $\{k \in \mathbb{Z} : k = 3a, a \in \mathbb{Z}\}$.\\
+
 
 \end{document}
 

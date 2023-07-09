@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1688709392 "c:/Users/Fr0g_/Desktop/Algebraic Structures/document.tex" "document.pdf" "document" 1688709396 0
+["pdflatex"] 1688710016 "c:/Users/Fr0g_/Desktop/Algebraic Structures/document.tex" "document.pdf" "document" 1688710021 0
   "C:/Users/Fr0g_/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1688591518 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/Fr0g_/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1677441890 23175798 26bb72124e6a893461818a80fe55e270 ""
   "C:/Users/Fr0g_/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233955448 1004 54797486969f23fa377b128694d548df ""
@@ -149,10 +149,10 @@
   "C:/Users/Fr0g_/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
   "C:/Users/Fr0g_/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-abspage.sty" 1650051284 2245 c8a4088d07cffc2e5207730c738edd76 ""
   "C:/Users/Fr0g_/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-base.sty" 1650051284 20785 71a3d72ab517959a6979c27e6176bec1 ""
-  "c:/Users/Fr0g_/Desktop/Algebraic Structures/document.tex" 1688709391 12300 1dbc52ee4d1bb754e2c005d0ed86e2f1 ""
-  "document.aux" 1688709396 921 d011f9a28de6e1a14a150bb6ff40beee "pdflatex"
-  "document.tex" 1688709391 12300 1dbc52ee4d1bb754e2c005d0ed86e2f1 ""
-  "document.toc" 1688709396 191 c4bb028b03c60801f57e383b20b5cf19 "pdflatex"
+  "c:/Users/Fr0g_/Desktop/Algebraic Structures/document.tex" 1688710014 12577 fa11b957e2ccaf921f395856dcf4a2b7 ""
+  "document.aux" 1688710020 1003 30b151635e941dc29b0385fc9bd266df "pdflatex"
+  "document.tex" 1688710014 12577 fa11b957e2ccaf921f395856dcf4a2b7 ""
+  "document.toc" 1688710020 232 ba62412787712d704b471aafc51fc6b6 "pdflatex"
   (generated)
   "document.aux"
   "document.log"
