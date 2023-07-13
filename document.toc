@@ -2,3 +2,4 @@
 \contentsline {chapter}{\numberline {1}Set Theory}{2}{}%
 \contentsline {section}{\numberline {1.1}Sets and Operations over Sets}{2}{}%
 \contentsline {section}{Exercises}{6}{}%
+\contentsline {section}{\numberline {1.2}Relations}{7}{}%

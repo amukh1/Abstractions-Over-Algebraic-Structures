@@ -7,9 +7,13 @@
 \usepackage{amssymb}
 \usepackage[framemethod=TikZ]{mdframed}
 
-
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\modu}{\text{ mod }}
 \newcounter{theo}[section]\setcounter{theo}{0}
 \renewcommand{\thetheo}{\arabic{section}.\arabic{theo}}
+\newenvironment{proof}{\textbf{\textit{Proof:}}}{\hfill$\square$}
 \newenvironment{theo}[2][]{%
 \refstepcounter{theo}%
 \ifstrempty{#1}%
@@ -130,6 +134,7 @@ The next operations I will introduce are the Cartesian Product and the power set
 The \textbf{Cartesian Product} of two sets is essentially each all the possible coordinates you can make with the elements of the set.
 The Cartesian Product of two sets, $A$ and $B$, is written as $A \times B$.
 For example, $$\{1, 2\} \times \{2, 3\} = {(1,2), (1,3), (2,2), (2,3)}.$$
+Many people shorten something like $\mathbb{R} \times \mathbb{R}$ to $\mathbb{R}^2$.
 And now I think it is due time for our first theorem:
 \begin{theo}[Cardinality of Cartesian Product]{thm:cartesian}
     The cardinality of the Cartesian Product of two sets is the product of the cardinalities of the two sets.
@@ -168,7 +173,7 @@ The second theorem is a corollary of the first:
     $$|A \cap B| = |A| + |B| - |A \cup B|.$$
 \end{theo}
 \textbf{\textit{Proof:}} This is a corollary of the previous theorem, we can just switch the union and intersection.
-We know $|A| + |B|$ is the union $+$ the intersection, so we subtract the union to get the intersection
+We know $|A| + |B|$ is the union $+$ an extra counting of the intersection, so we subtract the union to get the intersection.
 
 $\hfill \square$
 
@@ -203,9 +208,13 @@ This is not a coincidence, and in fact, it is true for all sets. I think this ca
     The cardinality of the power set of a set is $2^{|A|}$.
     $$|\mathcal{P}(A)| = 2^{|A|}.$$
 \end{theo}
-
-\textbf{\textit{Proof:}} This is a relatively easy proof, we can prove it by induction, or take a more simple approach. One way to describe the cardinality of the power set, is to understand
-that the power set contains each \textbf{grouping} of elements in $A$. In other words, out of all the elements in $A$, the power set contains all the groups of 0 elements, $+$ all the groups of 1 elements, $\dots$
+\textbf{\textit{Proof:}} I'll prove this in two different ways, one is a bit more formal, and the other is a bit more intuitive.
+First I'll do the formal proof.
+For each possible subset of $A$, each element of $A$ is either in or not in that subset.
+That makes $|A|$ binary choices for each element, making the number of subsets $2^{|A|}$.
+$\hfill \square$ \\
+\textbf{\textit{Proof:}} The other way to prove this is to describe the cardinality of the power set in a different way.
+The power set contains each \textbf{grouping} of elements in $A$. In other words, out of all the elements in $A$, the power set contains all the groups of 0 elements, $+$ all the groups of 1 elements, $\dots$
 $$|\mathcal{P}(A)| = {|A| \choose 0} + {|A| \choose 1} + \dots + {|A| \choose |A|}.$$
 This can easily be re-arranged into $$\sum_{k=0}^{|A|}{|A| \choose k}$$
 Now all we have to do is show this sum equals $2^{|A|}$, which is easy to do with the Binomial Theorem.
@@ -221,8 +230,79 @@ And with that, I think this is a great conclusion to the section.
 1. Show that $A \subseteq B$ if and only if $A \cap B = A$. \\
 2. Show that the set $\{k \in \mathbb{Z} : k = 12a, a \in \mathbb{Z}\}$ is a subset of $\{k \in \mathbb{Z} : k = 3a, a \in \mathbb{Z}\}$.\\
 
+\section{Relations}
+A relation can be described as a subset of the Cartesian product of two sets. So in other words, a relation is a set of ordered pairs.
+For example, I'm sure you will recognise this function from your days in middle school: $$y = f(x), f(x) = x$$
+This is an example of a relation. It is a set, and it is relating $y$ and $x$. $$f(x) = \{(x, y) \in \mathbb{R}^2 : x = y\}.$$
+So, the set's elements are ordered pairs of $\mathbb{R} \times \mathbb{R}$, that satisfy the condition $x = y$.
+This is a special type of relation called a \textbf{\textit{function}}, which I am sure you have heard of before.
 
+A little interjection here, before I continue I will introduce a new operation on integers called \textbf{\textit{modulo}}.
+Modulo takes the remainder of a division. For example, $12/5$ is $2$ remainder $2$, so $12 \mod 5 = 2$.
+Notation $a \equiv b (\modu n)$ means that $a$ and $b$ have the same remainder when divided by $n$, or $a \modu n = b \modu n$.
+
+Another thing I will introduce for later is the concept of two numbers "dividing" eachother. $a$ divides $b$ if $b/a$ is an integer.
+This is denoted as $a | b$. $$a | b \implies b = ka, k \in \mathbb{Z}.$$
+
+A relation $R$ has no restrictions. In $R^2$, the relation $\{(0,1), (0,2), (1, 1)\}$ is a valid relation.
+The first relation I will explore is $$R = \{(a, b) \in \mathbb{Z}^2 : a \equiv b (\text{mod } n)\}.$$
+This relation is very interesting because both of the values in each pair are either both even or both odd.
+For example, $(4,6)$ is a part of this relation, but $(4, 5)$ is not. 
+I'll use this to introduce different \textit{types} of relations. The relation $R$ is called an \textbf{\textit{equivalence relation}}.
+For a relation to be an equivalence relation, it must satisfy three properties:
+% list
+\begin{enumerate}
+    \item Reflexivity: $(a, a) \in R$ for all $a \in A$.
+    \item Symmetry: $(a, b) \in R \implies (b, a) \in R$.
+    \item Transitivity: $(a, b) \in R \land (b, c) \in R \implies (a, c) \in R$.
+\end{enumerate}
+% end list
+The relation $R$ satisfies all three of these properties, so it is an equivalence relation.
+I'll show that it satisfies all three of these properties.
+% list
+\begin{enumerate}
+    \item $a \in \bZ, 2 | (a-a) \implies a \equiv a (\text{mod } 2) \implies (a,a) \in R$.
+    \item $(a, b) \in R \implies a \equiv b (\text{mod } n) \implies b \equiv a (\text{mod } n) \implies (b, a) \in R$.
+    \item $(a, b) \in R \land (b, c) \in R \implies a \equiv b (\text{mod } n) \land b \equiv c (\text{mod } n) \implies a \equiv c (\text{mod } n) \implies (a, c) \in R$.
+\end{enumerate}
+Basically, for Reflexivity, I show that 2 divides $a-a$ for all $a \in \bZ$, which is obviously true because $a-a = 0$, and all numbers divide 0. 
+For Symmetry, I show that if $a \equiv b (\text{mod } n)$, $b \equiv a (\text{mod } n)$, which is also obviously true because you can always flip equality.
+For Transitivity, in English, I basically show that if $a$ and $b$ have the same remainder, lets call it $r$ ($a \text{ mod } b = r$), and $b$ and $c$ have the same remainder, $r$, then $a$ and $c$ have the same remainder, $r$, so that implies $(a, c) \in R$.
+
+Now I will use this relation to introduce new notation. If $(a, b) \in R$, we write this as $a \mathrel R b$, if it is not in $R$, we write it as $a \not \mathrel R b$.
+The "equality" symbol is a relation. It is the set of pairs whoose elements equal eachother.
+That is why we write $a = b$, to show $(a,b) \in "="$, or that they are "equal".
+If a relation is an equivalence relation, we write it with a $\sim$ instead of an $=$, as there can be many equivalence relations other than $=$.
+I will leave proving $=$ is an equivalence relation as an exercise to the reader.
+If you are dealing with many equivalence relations, for example $A$ and $B$, you may have $\sim_A$ and $\sim_B$ as the equivalence relations for $A$ and $B$ respectively.
+
+Because $R$ is an equivalence relation, I will use $\sim$ or $\sim_R$ to refer to it.
+An \textbf{\textit{equivalence class}} is a set of elements that are all related to eachother.
+For example, the equivalence class of $1$ is $\{1, 3, 5, 7, 9, \dots\}$, because all of these numbers have the same remainder when divided by $2$.
+We denote an equivalence class as $[a]$ or $[a]_A$, where $a$ is the element of the equivalence class of R. $$[a]_R = \{b \in Z : a \sim_R b\}.$$
+$$[a] = \{b : a \sim b\}$$
+$[1]_R = \{1, 3, 5, 7, 9, \dots\}$ because $1 \sim_R 1, 1 \sim_R 3, 1 \sim_R 5, \dots$.
+An equivalence class is a set of elements that are all related to eachother.
+This calls for a new pair of theorems!
+\begin{theo}[Elements of Equivalence Classes are Locally Unique]{thm:uniqueclass}
+    The equivalence class of some element in another equivalence class is itself.
+    $$b \in [a] \implies [a] = [b]$$
+\end{theo}
+\begin{proof}
+    Let $b \in [a]$. Then $a \sim b$. Let $c \in [a]$. Then $a \sim c$. Because $a \sim b$ and $a \sim c$, $b \sim c$ (Transivity).
+    Because $b \sim c$, $c \in [b]$. Because $c \in [b]$, $[a] \subseteq [b]$. Because $b \in [a]$, $[b] \subseteq [a]$.
+    Therefore, $[a] = [b]$.
+\end{proof}
+\begin{theo}[Equivalence Class Theorem]{thm:equivalence_class}
+    Let $R$ be an equivalence relation on a set $A$. Then for all $a, b \in A$, $[a] = [b]$ or $[a] \cap [b] = \emptyset$.
+\end{theo}
+\textbf{\textit{Proof:}} Let $R$ be an equivalence relation on a set $A$. Then for all $a, b \in A$, $[a] = [b]$ or $[a] \cap [b] = \emptyset$.
+    Let $a, b \in A$. If $[a] = [b]$, then we are done. Assume $[a] \neq [b]$. Then there exists some $c \in [a]$ such that $c \not \in [b]$.
+    Then $c \sim a$ and $c \not \sim b$. Because $c \sim a$, $a \sim c$, and because $c \not \sim b$, $b \not \sim c$.
+    Then $a \sim c \sim a$ and $b \not \sim c \not \sim b$, so $a \not \sim b$. Then $[a] \cap [b] = \emptyset$.
+$\hfill \square$
 \end{document}
+
 
 
 \begin{theo}[Pythagoras' theorem]{thm:pythagoras}
