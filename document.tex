@@ -5,15 +5,18 @@
 \usepackage{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{empheq}
+\usetikzlibrary{tikzmark}
 \usepackage[framemethod=TikZ]{mdframed}
 
 \newcommand{\bR}{\mathbb{R}}
 \newcommand{\bC}{\mathbb{C}}
 \newcommand{\bZ}{\mathbb{Z}}
 \newcommand{\modu}{\text{ mod }}
+\newenvironment{proof}{\textbf{\textit{Proof.}}}{\hfill$\square$}
 \newcounter{theo}[section]\setcounter{theo}{0}
 \renewcommand{\thetheo}{\arabic{section}.\arabic{theo}}
-\newenvironment{proof}{\textbf{\textit{Proof:}}}{\hfill$\square$}
 \newenvironment{theo}[2][]{%
 \refstepcounter{theo}%
 \ifstrempty{#1}%
@@ -140,7 +143,7 @@ And now I think it is due time for our first theorem:
     The cardinality of the Cartesian Product of two sets is the product of the cardinalities of the two sets.
     $$|A \times B| = |A| \cdot |B|.$$
 \end{theo}
-\textbf{\textit{Proof:}} This result is relatively easy to show, for each possible element, there are $|A|$ possible values for the first coordinate, and $|B|$ possible values for the second coordinate, so there are $|A| \cdot |B|$ possible coordinates, and thus $|A| \cdot |B|$ elements in the Cartesian Product.
+\textbf{\textit{Proof.}} This result is relatively easy to show, for each possible element, there are $|A|$ possible values for the first coordinate, and $|B|$ possible values for the second coordinate, so there are $|A| \cdot |B|$ possible coordinates, and thus $|A| \cdot |B|$ elements in the Cartesian Product.
 
 $\hfill \square$
 
@@ -160,7 +163,7 @@ Now that we understand Cardinality, I can introduce these theorems:
     The cardinality of the union of two sets is the sum of the cardinalities of the two sets minus the cardinality of their intersection.
     $$|A \cup B| = |A| + |B| - |A \cap B|.$$
 \end{theo}
-\textbf{\textit{Proof:}} This is a bit more complicated to show, but it is still relatively easy.
+\textbf{\textit{Proof.}} This is a bit more complicated to show, but it is still relatively easy.
 We can split the union into two parts, the intersection and the union of the two sets without the intersection.
 The intersection is counted twice, so we subtract it once.
 
@@ -172,7 +175,7 @@ The second theorem is a corollary of the first:
     The cardinality of the intersection of two sets is the sum of the cardinalities of the two sets minus the cardinality of their union.
     $$|A \cap B| = |A| + |B| - |A \cup B|.$$
 \end{theo}
-\textbf{\textit{Proof:}} This is a corollary of the previous theorem, we can just switch the union and intersection.
+\textbf{\textit{Proof.}} This is a corollary of the previous theorem, we can just switch the union and intersection.
 We know $|A| + |B|$ is the union $+$ an extra counting of the intersection, so we subtract the union to get the intersection.
 
 $\hfill \square$
@@ -182,7 +185,7 @@ Another important theorem that involves unions and intersections is De Morgan's 
     $$(A \cup B)^c = A^c \cap B^c$$
     $$(A \cap B)^c = A^c \cup B^c$$
 \end{theo}
-\textbf{\textit{Proof:}} This is much harder than the others. I will only prove the first one, the second one will be left as an exercise to the reader.
+\textbf{\textit{Proof.}} This is much harder than the others. I will only prove the first one, the second one will be left as an exercise to the reader.
 First I will assume $A,B \subseteq U$.
 So to prove the result we must show $$(A \cup B)^c \subseteq A^c \cap B^c$$ and $$(A^c \cap B^c) \subseteq (A \cup B)^c.$$
 First, let there exist some $x \in (A \cup B)^c,$ that means $x \notin (A \cup B)$.
@@ -208,12 +211,12 @@ This is not a coincidence, and in fact, it is true for all sets. I think this ca
     The cardinality of the power set of a set is $2^{|A|}$.
     $$|\mathcal{P}(A)| = 2^{|A|}.$$
 \end{theo}
-\textbf{\textit{Proof:}} I'll prove this in two different ways, one is a bit more formal, and the other is a bit more intuitive.
+\textbf{\textit{Proof.}} I'll prove this in two different ways, one is a bit more formal, and the other is a bit more intuitive.
 First I'll do the formal proof.
 For each possible subset of $A$, each element of $A$ is either in or not in that subset.
 That makes $|A|$ binary choices for each element, making the number of subsets $2^{|A|}$.
 $\hfill \square$ \\
-\textbf{\textit{Proof:}} The other way to prove this is to describe the cardinality of the power set in a different way.
+\textbf{\textit{Proof.}} The other way to prove this is to describe the cardinality of the power set in a different way.
 The power set contains each \textbf{grouping} of elements in $A$. In other words, out of all the elements in $A$, the power set contains all the groups of 0 elements, $+$ all the groups of 1 elements, $\dots$
 $$|\mathcal{P}(A)| = {|A| \choose 0} + {|A| \choose 1} + \dots + {|A| \choose |A|}.$$
 This can easily be re-arranged into $$\sum_{k=0}^{|A|}{|A| \choose k}$$
@@ -296,11 +299,56 @@ This calls for a new pair of theorems!
 \begin{theo}[Equivalence Class Theorem]{thm:equivalence_class}
     Let $R$ be an equivalence relation on a set $A$. Then for all $a, b \in A$, $[a] = [b]$ or $[a] \cap [b] = \emptyset$.
 \end{theo}
-\textbf{\textit{Proof:}} Let $R$ be an equivalence relation on a set $A$. Then for all $a, b \in A$, $[a] = [b]$ or $[a] \cap [b] = \emptyset$.
+\textbf{\textit{Proof.}} Let $R$ be an equivalence relation on a set $A$. Then for all $a, b \in A$, $[a] = [b]$ or $[a] \cap [b] = \emptyset$.
     Let $a, b \in A$. If $[a] = [b]$, then we are done. Assume $[a] \neq [b]$. Then there exists some $c \in [a]$ such that $c \not \in [b]$.
     Then $c \sim a$ and $c \not \sim b$. Because $c \sim a$, $a \sim c$, and because $c \not \sim b$, $b \not \sim c$.
     Then $a \sim c \sim a$ and $b \not \sim c \not \sim b$, so $a \not \sim b$. Then $[a] \cap [b] = \emptyset$.
 $\hfill \square$
+
+\section*{Exercises}
+\begin{enumerate}
+    \item Prove that $=$ is an equivalence relation.
+    \item Find another equivalence relation and prove it is an equivalence relation.
+\end{enumerate}
+
+\section{Functions and Maps}
+In the previous section, I introduced equivalence relations, a special type of relation.
+This section is dedicated to another special type of relation, \textbf{\textit{functions}}.
+A function is a relation where for each input there is exactly one output.
+In other words "forall inputs to a function F, there is one unique output".
+In middle school this was called the vertical line test.
+If two coordinates have the same x value, they have the same y value (In other words it is the only point, meaning there can only be one point intersecting the vertical line).
+
+% A function is usually called a \textbf{\textit{map}}, because they \textbf{\textit{map}} two sets to eachother.
+A function is sometimes called a \textbf{\textit{map}} because it is a correspondence between some input and a \textbf{\textit{unique}} output, like a point on a map corresponds with a unique point in space
+% To map two sets to eachother means to connect elements between them.
+% We use the term "\textbf{\textit{maps}} two sets to eachother" because it connects the corresponding elements in each set, as maps connect corresponding points to their location in the world.
+If a map $M$ maps two sets, $A$ and $B$, we write $M: A \to B$.
+In this case, $A$ is called the \textbf{\textit{domain}} and $B$ is called the \textbf{\textit{codomain}}.
+$$\text{Let } M:A \to B, A = {a, b, c}, B = {x, y, z}$$
+$$M(a \in A) = y \in B, M(b \in A) = x \in B, M(c \in A) = z \in B$$
+$$M = \{(a, y), (b, x), (c, z)\}$$
+\begin{center}
+    \[
+        M\left\{
+        \begin{array}{l}
+        \begin{tabular}{c| c}
+            \tikzmarknode{A}{$A$} & \tikzmarknode{a}{$a$}, \tikzmarknode{b}{$b$}, \tikzmarknode{c}{$c$} \\
+            \\
+            \tikzmarknode{B}{$B$} & \tikzmarknode{x}{$x$}, \tikzmarknode{y}{$y$}, \tikzmarknode{z}{$z$} \\
+        \end{tabular}
+        \end{array}
+        \right. 
+    \]
+
+    \begin{tikzpicture}[overlay, remember picture]
+        \draw [->,shorten >=2.5pt] (A) -- (B);
+        \draw [->,shorten >=2.5pt] (a) -- (y);
+        \draw [->,shorten >=2.5pt] (b) -- (x);
+        \draw [->,shorten >=2.5pt] (c) -- (z);
+    \end{tikzpicture}
+\end{center}
+
 \end{document}
 
 
