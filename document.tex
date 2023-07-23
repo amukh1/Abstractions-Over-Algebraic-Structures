@@ -9,6 +9,10 @@
 \usepackage{empheq}
 \usetikzlibrary{tikzmark}
 \usepackage[framemethod=TikZ]{mdframed}
+%library for graphing functions
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+% \usepackage{amsthm}
 
 \newcommand{\bR}{\mathbb{R}}
 \newcommand{\bC}{\mathbb{C}}
@@ -229,9 +233,11 @@ And with that, I think this is a great conclusion to the section.
 
 % exercies
 \section*{Exercises}
-\addcontentsline{toc}{section}{Exercises}
-1. Show that $A \subseteq B$ if and only if $A \cap B = A$. \\
-2. Show that the set $\{k \in \mathbb{Z} : k = 12a, a \in \mathbb{Z}\}$ is a subset of $\{k \in \mathbb{Z} : k = 3a, a \in \mathbb{Z}\}$.\\
+% \addcontentsline{toc}{section}{Exercises}
+\begin{enumerate}
+    \item Show that $A \subseteq B$ if and only if $A \cap B = A$.
+    \item Show that the set $\{k \in \mathbb{Z} : k = 12a, a \in \mathbb{Z}\}$ is a subset of $\{k \in \mathbb{Z} : k = 3a, a \in \mathbb{Z}\}$.
+\end{enumerate}
 
 \section{Relations}
 A relation can be described as a subset of the Cartesian product of two sets. So in other words, a relation is a set of ordered pairs.
@@ -349,11 +355,183 @@ $$M = \{(a, y), (b, x), (c, z)\}$$
     \end{tikzpicture}
 \end{center}
 
+Had there been two arrows coming out of one element in the domain, both leading to different elements in the codomain, it would not be a function.
+It still would have been a function two different elements in the domain pointed to the same one element in the codomain.
+
+\begin{center}
+
+        $$\overbrace{
+        \begin{tabular}{c| c}
+            \tikzmarknode{A}{$A$} & \tikzmarknode{a}{$a$}, \tikzmarknode{b}{$b$}, \tikzmarknode{c}{$c$} \\
+            \\
+            \tikzmarknode{B}{$B$} & \tikzmarknode{x}{$x$}, \tikzmarknode{y}{$y$}, \tikzmarknode{z}{$z$} \\
+        \end{tabular}
+        }^{\text{Not a Function}}$$
+    \begin{tikzpicture}[overlay, remember picture]
+        \draw [->,shorten >=2.5pt] (A) -- (B);
+        \draw [->,shorten >=2.5pt] (a) -- (y);
+        \draw [->,shorten >=2.5pt] (b) -- (x);
+        \draw [->,shorten >=2.5pt, red] (b) -- (z);
+        \draw [->,shorten >=2.5pt] (c) -- (z);
+    \end{tikzpicture}
+\end{center}
+Notice that this is not a function because $b$ maps to both $x$ and $z$, not because $b$ and $c$ both map to $z$.
+
+We call a function $f: A \to B$ \textbf{\textit{injective}} if each element in the domain maps to one and only one element in the codomain.
+You can also describe this relationship as "unique", if something is unique that means there is only one of it.
+In math terms an injective function has this property: $$f: A \to B$$ $$\forall a, b \in A, f(a) = f(b) \implies a = b$$
+In $\mathbb{R}$, the function $f(x) = x^2$ is not injective because $f(-1) = f(1) = 1$.
+A good way to check if a function in $\mathbb{R}$ is injective is to see if it passes the "horizontal line test".
+It is similar to the vertical line test, but instead of checking if there is only one point on the vertical line, you check if there is only one point on the horizontal line.
+A parabola clearly does not pass this line test, so it is not injective as we verified above.
+
+%pgfplots
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+            axis lines = center,
+            xlabel = $x$,
+            ylabel = {$f(x)$},
+            xmin=-5, xmax=5,
+            ymin=-5, ymax=5,
+            xtick={-4,-3,...,4},
+            ytick={-4,-3,...,4},
+        ]
+        \addplot [
+            domain=-5:5, 
+            samples=100, 
+            color=blue,
+        ]
+        {x^2};
+        \addplot [
+            domain=-5:5, 
+            samples=100, 
+            color=blue,
+        ]{1};
+
+        % add points
+        \node[label={135:{(1,1)}},circle,fill,inner sep=2pt] at (axis cs:1,1) {};
+        \node[label={135:{(-1,1)}},circle,fill,inner sep=2pt] at (axis cs:-1,1) {};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+If a function $f: A \to B$ is injective, then: $|A| \leq |B|$, because if $|A| > |B|$, then there would be more elements in the domain than in the codomain, and therefore atleast one element in the codomain would have to be mapped to by more than one element in the domain.
+
+\begin{theo}[Pigeonhole Principle pt. 1]{thm:pigeonhole1}
+    If a function $f: A \to B$ is injective, then $|A| \leq |B|$.
+\end{theo}
+It is called the pigeonhole principle because if you have $n$ pigeons and $m$ pigeonholes, and $n > m$, then at least one pigeonhole must have more than one pigeon in it.
+An injective function might also be called "one to one".
+
+A function is \textbf{\textit{surjective}} if every element in the codomain is mapped to by at least one element in the domain.
+In math terms, the codomain is equal to the \textbf{\textit{range}} of the function.
+The range is the set of all possible outputs of the function.
+$$f: A \to B$$
+$$\textrm{range } f = \{f(a) \in B : a \in A\}$$
+For example, a function $f : \mathbb{R} \to \mathbb{R}$ defined by $f(x) = x^2$ is not surjective because there is no $x \in \mathbb{R}$ such that $f(x) = -1$.
+All the function tables I used in the examples above were surjective because the codomain was equal to the range.
+Here is an example of a non-surjective function:
+
+\begin{center}
+    \begin{tabular}{c| c}
+        \tikzmarknode{A}{$A$} & \tikzmarknode{a}{$a$}, \tikzmarknode{b}{$b$}, \tikzmarknode{c}{$c$} \\
+        \\
+        \tikzmarknode{B}{$B$} & \tikzmarknode{x}{$x$}, \tikzmarknode{y}{$y$}, \tikzmarknode{z}{$z$}, $\vartheta$ \\
+    \end{tabular}
+
+    \begin{tikzpicture}[overlay, remember picture]
+        \draw [->,shorten >=2.5pt] (A) -- (B);
+        \draw [->,shorten >=2.5pt] (a) -- (x);
+        \draw [->,shorten >=2.5pt] (b) -- (y);
+        \draw [->,shorten >=2.5pt] (c) -- (z);
+    \end{tikzpicture}
+\end{center}
+Clearly the codomain contains $\vartheta$, but the range does not, so this function is not surjective.
+If a function $f: A \to B$ is surjective, then: $|A| \geq |B|$, because if $|A| < |B|$, then there would be more elements in the codomain than in the domain, and therefore there would be at least one element in the codomain that is not mapped to by any element in the domain, which is not allowed for a surjective function.
+
+\begin{theo}[Pigeonhole Principle pt. 2]{thm:pigeonhole2}
+    If a function $f: A \to B$ is surjective, then $|A| \geq |B|$.
+\end{theo}
+A function might also be called "onto" if it is surjective.
+
+Finally, if a function is both injective and surjective it is called \textbf{\textit{bijective}}.
+Bijective functions have many interesting properties to them, being one to one and onto.
+First, if a function is bijective, then it has an inverse function.
+This is because if it is injective, then its inverse will be a function (otherwise it would not pass the vertical line test).
+If it is surjective, then the domain of its inverse will be the codomain of the original function, and the codomain of its inverse will be the domain of the original function.
+Another interesting property of bijective functions is that the composition of two bijective functions is also bijective.
+This is because if $f$ and $g$ are bijective, then $f^{-1}$ and $g^{-1}$ exist, and $(f \circ g)^{-1} = g^{-1} \circ f^{-1}$.
+Probably the most interesting property of bijective functions is that if $f: A \to B$ is bijective, then $|A| = |B|$.
+
+\begin{theo}[Pigeonhole Principle pt. 3]{thm:pigeonhole3}
+    If a function $f: A \to B$ is bijective, then $|A| = |B|$.
+\end{theo}
+\begin{proof}
+    If $f$ is bijective, then it is both injective and surjective.
+    If it is injective, then $|A| \leq |B|$.
+    If it is surjective, then $|A| \geq |B|$.
+    Therefore, $|A| = |B|$.
+\end{proof} 
+
+Also, if two sets have the same cardinality (called \textbf{\textit{equinumerous}}), then there exists a bijective function between them.
+Often times, we can prove that two sets are equinumerous by finding a bijective function between them.
+Another theorem that is useful for proving that two sets are equinumerous is the \textbf{\textit{Cantor-Bernstein-Schroeder Theorem}}.
+This theorem states that if there exists an injective function $f: A \to B$ and an injective function $g: B \to A$, then there exists a bijective function $h: A \to B$.
+
+\begin{theo}[Cantor-Bernstein-Schroeder Theorem]{thm:cantorbernsteinschroeder}
+    If there exists an injective function $f: A \to B$ and an injective function $g: B \to A$, then there exists a bijective function $h: A \to B$.
+\end{theo}
+
+I cannot provide proof for this theorem, but I can make sense of it.
+If there is an injective function $f: A \to B$, then $|A| \leq |B|$, and if there is an injective function $g: B \to A$, then $|B| \leq |A|$.
+If both of these are true, then $|A| = |B|$.
+
+% \begin{proof}
+%     Let $A_0 = A$ and $B_0 = B$.
+%     Let $A_{n+1} = A_n \setminus f(g(A_n))$ and $B_{n+1} = B_n \setminus g(f(B_n))$.
+%     Let $A_\omega = \bigcap_{n=0}^\infty A_n$ and $B_\omega = \bigcap_{n=0}^\infty B_n$.
+%     Let $h: A \to B$ be defined by:
+%     \begin{equation*}
+%         h(x) = \begin{cases}
+%             f(x) & \textrm{if } x \in A_\omega \\
+%             g^{-1}(x) & \textrm{if } x \in A \setminus A_\omega
+%         \end{cases}
+%     \end{equation*}
+%     We will show that $h$ is bijective.
+%     First, we will show that $h$ is injective.
+%     Let $x, y \in A$ such that $h(x) = h(y)$.
+%     If $x \in A_\omega$, then $h(x) = f(x)$.
+%     If $y \in A_\omega$, then $h(y) = f(y)$.
+%     Since $h(x) = h(y)$, then $f(x) = f(y)$.
+%     Since $f$ is injective, then $x = y$.
+%     If $x \in A \setminus A_\omega$, then $h(x) = g^{-1}(x)$.
+%     If $y \in A \setminus A_\omega$, then $h(y) = g^{-1}(y)$.
+%     Since $h(x) = h(y)$, then $g^{-1}(x) = g^{-1}(y)$.
+%     Since $g$ is injective, then $x = y$.
+%     Therefore, $h$ is injective.
+%     Next, we will show that $h$ is surjective.
+%     Let $y \in B$.
+%     If $y \in B_\omega$, then $y \in f(A_\omega)$.
+%     Since $f$ is surjective, then there exists $x \in A_\omega$ such that $f(x) = y$.
+%     Therefore, $h(x) = y$.
+%     If $y \in B \setminus B_\omega$, then $y \in g(A \setminus A_\omega)$.
+%     Since $g$ is surjective, then there exists $x \in A \setminus A_\omega$ such that $g(x) = y$.
+%     Therefore, $h(x) = y$.
+%     Therefore, $h$ is surjective.
+%     Since $h$ is both injective and surjective, then $h$ is bijective.
+% \end{proof}
+\newpage
+\section*{Exercises}
+\begin{enumerate}
+    \item Show $\mathbb{N}$ is equinumerous to $\mathbb{Z}$.
+    \item Show $\mathbb{N}$ is equinumerous to $2\mathbb{Z}$ (even integers).
+\end{enumerate}
+
 \end{document}
 
 
 
-\begin{theo}[Pythagoras' theorem]{thm:pythagoras}
+\begin{theo}[Pythagoras' theSorem]{thm:pythagoras}
     In a right triangle, the square of the hypotenuse is equal to the sum of the squares of the catheti.
     \[a^2+b^2=c^2\]
     \end{theo}

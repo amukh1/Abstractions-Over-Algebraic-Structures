@@ -1,6 +1,5 @@
 \contentsline {part}{I\hspace {1em}Preliminaries}{1}{}%
 \contentsline {chapter}{\numberline {1}Set Theory}{2}{}%
 \contentsline {section}{\numberline {1.1}Sets and Operations over Sets}{2}{}%
-\contentsline {section}{Exercises}{6}{}%
 \contentsline {section}{\numberline {1.2}Relations}{7}{}%
 \contentsline {section}{\numberline {1.3}Functions and Maps}{9}{}%
